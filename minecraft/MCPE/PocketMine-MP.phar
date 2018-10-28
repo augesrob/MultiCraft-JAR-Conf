@@ -1,0 +1,68 @@
+[config]
+name = Other: PocketMine-MP
+source = https://jenkins.pmmp.io/job/PocketMine-MP/lastSuccessfulBuild/artifact/PocketMine-MP.phar
+category = MCPE
+
+[start]
+command = "{JAR_DIR}/pocketmine/bin/php/php.exe" "{JAR_DIR}/pocketmine/PocketMine-MP.phar" "{JAR}" --memory-limit={MAX_MEMORY}M --disable-ansi --data="{SERVER_DIR}"/PocketMine --plugins="{SERVER_DIR}/plugins"/PocketMine --level-name="{WORLD}" --server-ip="{IP}" --server-port={PORT} --max-players={MAX_PLAYERS}
+
+## Plugin configuration
+[plugins]
+pluginDir = plugins
+pluginMatch = \.(phar|zip)$
+
+## Encoding used for strings sent to and received from the server
+[encoding]
+## The encoding to use to send data to the Minecraft process
+## Use "system" for your current locale.
+## default: system
+encode = system
+## The encoding to use to decode data received from the Minecraft process
+## Use "system" for your current locale.
+## default: system
+decode = system
+## The encoding used when reading/writing configuration files such as
+## the server.properties
+## default: latin-1
+fileEncoding = latin-1
+
+## Command remapping
+[commands]
+say = say
+list = list
+save-on = save-on
+save-off = save-off
+save-all = save-all
+stop = stop
+tell = tell
+give = give
+tp = tp
+deop = deop
+op = op
+pardon-ip = pardon-ip
+ban-ip = ban-ip
+pardon = pardon
+ban = ban
+kick = kick
+help = help
+
+
+## Console output parsing can be completely customized to support
+## any format (and theoretically any game). Please contact us if you require this.
+
+[parse_startup]
+start=Done
+
+[parse_log]
+start=^(?P<time>(:?[-\d]+ )?\[?[:\d]+\]?)\s+\[(?P<type>[^]]+)\]\:?\s+(:?\[[^]]+\]\s+)?(?P<line>.*)$
+
+[parse_players]
+start2=There are (?P<v_maxDataLines>\d+)/\d+ players
+
+[parse_connect]
+shortStart=logged in with entity id \d+ at
+start=(?P<name>[A-Za-z0-9_]{3,16})[/(?P<ip>.*):\d+] logged in with entity id \d+ at
+
+[parse_disconnect]
+shortStart=logged out
+start=(?P<name>[A-Za-z0-9_]{3,16})[/(?P<ip>.*):\d+] logged out
